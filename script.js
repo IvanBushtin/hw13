@@ -11,15 +11,17 @@ jQuery(function ($) {
     function renderTask() {
         taskList.empty();
         $.each(task, function (i) {
-            taskList.append(`
-                        <li>
-                            ${this}<button data-index="${i}">Delete Task</button></li>`);
+            taskList.append(`<li>${this}<input type="checkbox" class="completeTask" value=""><button data-index="${i}">Delete Task</button></li>`);
         });
     }
 
     function removeTask(index) {
         task.splice(index, 1);
         renderTask();
+    }
+
+    function completeTask() {
+        $(this).parent().toggleClass("done");
     }
 
     inputField.on('change', function () {
@@ -31,4 +33,7 @@ jQuery(function ($) {
         const index = $(this).data('index');
         removeTask(index);
     })
+
+    $(taskList).on('click', ".completeTask", completeTask)
+
 });
