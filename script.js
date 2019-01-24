@@ -11,7 +11,7 @@ jQuery(function ($) {
     function renderTask() {
         taskList.empty();
         $.each(task, function (i) {
-            taskList.append(`<li>${this}<input type="checkbox" class="completeTask" value=""><button data-index="${i}">Delete Task</button></li>`);
+            taskList.append(`<li><input type="checkbox" class="checkbox">${this}<button data-index="${i}">Delete Task</button></li>`);
         });
     }
 
@@ -20,8 +20,8 @@ jQuery(function ($) {
         renderTask();
     }
 
-    function completeTask() {
-        $(this).parent().toggleClass("done");
+    function doneTask() {
+
     }
 
     inputField.on('change', function () {
@@ -33,7 +33,4 @@ jQuery(function ($) {
         const index = $(this).data('index');
         removeTask(index);
     })
-
-    $(taskList).on('click', ".completeTask", completeTask)
-
 });
