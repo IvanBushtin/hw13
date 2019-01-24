@@ -1,39 +1,62 @@
 jQuery(function ($) {
-    const task = [];
+    const task = JSON.parse(localStorage.getItem('tasks')) || [];
     const taskList = $('#task-list');
     const inputField = $('#input-field');
 
-    function addTask(value) {
-        task.push(value);
+    if (task.length) {
         renderTask();
     }
 
+    function saveTask() {
+        if (task.length) {
+            localStorage.setItem('tasks', JSON.stringify(task));
+        }
+    }
+    function addTask(value) {
+        task.push({
+            value: value,
+            completed: false,
+        });
+        renderTask();
+        saveTask();
+    }
     function renderTask() {
         taskList.empty();
         $.each(task, function (i) {
-            taskList.append(`<li>${this}<input type="checkbox" class="completeTask" value=""><button data-index="${i}">Delete Task</button></li>`);
+            taskList.append(`
+              <li data-index="${i}">
+                ${this.value}
+                <input type="checkbox" ${this.completed && 'checked'} class="completeTask" value="false">
+                <button>Delete Task</button>
+              </li>
+            `);
         });
     }
-
     function removeTask(index) {
         task.splice(index, 1);
+        saveTask();
         renderTask();
     }
-
     function completeTask() {
-        $(this).parent().toggleClass("done");
-    }
+        const parent = $(this).parent();
+        const index = parent.data('index');
+        const tasks = task[index];
 
+        tasks.completed = !tasks.comleted;
+
+        task[index] = tasks;
+
+        parent.toggleClass("done");
+
+        saveTask();
+    }
     inputField.on('change', function () {
         addTask(this.value);
         this.value = '';
     });
-
     $(taskList).on('click', 'button', function () {
-        const index = $(this).data('index');
+        const index = $(this).parent().data('index');
         removeTask(index);
     })
-
     $(taskList).on('click', ".completeTask", completeTask)
-
 });
