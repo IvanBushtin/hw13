@@ -1,3 +1,24 @@
+.task {
+    text-align: center;
+    padding-top: 50px;
+    width: 800px;
+    margin: 0 auto;
+}
+li {
+    list-style: none;
+    display: flex;
+}
+.input-field {
+    width: 300px;
+    height: 30px;
+}
+.task-list {
+    width: 300px;
+    margin: 20px auto;
+}
+
+
+
 .done {
     text-decoration: line-through;
 }

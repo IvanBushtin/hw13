@@ -12,6 +12,7 @@ jQuery(function ($) {
             localStorage.setItem('tasks', JSON.stringify(task));
         }
     }
+
     function addTask(value) {
         task.push({
             value: value,
@@ -20,6 +21,7 @@ jQuery(function ($) {
         renderTask();
         saveTask();
     }
+
     function renderTask() {
         taskList.empty();
         $.each(task, function (i) {
@@ -32,17 +34,19 @@ jQuery(function ($) {
             `);
         });
     }
+
     function removeTask(index) {
         task.splice(index, 1);
         saveTask();
         renderTask();
     }
+
     function completeTask() {
         const parent = $(this).parent();
         const index = parent.data('index');
         const tasks = task[index];
 
-        tasks.completed = !tasks.comleted;
+        tasks.completed = !tasks.completed;
 
         task[index] = tasks;
 
@@ -50,6 +54,11 @@ jQuery(function ($) {
 
         saveTask();
     }
+
+    function changeTask() {
+
+    }
+
     inputField.on('change', function () {
         addTask(this.value);
         this.value = '';
